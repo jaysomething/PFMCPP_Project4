@@ -31,9 +31,153 @@
 
  Wait for my code review.
  */
-
 #include <iostream>
+
+struct FloatType
+{
+    float add(float lhs, float rhs);
+    float subtract(float lhs, float rhs);
+    float multiply(float lhs, float rhs);
+    float divide(float lhs, float rhs);
+};
+
+float FloatType::add(float lhs, float rhs)
+{
+    return lhs + rhs;
+}
+
+float FloatType::subtract(float lhs, float rhs)
+{
+    return lhs - rhs;
+}
+
+float FloatType::multiply(float lhs, float rhs)
+{
+    return lhs * rhs;
+}
+
+float FloatType::divide(float lhs, float rhs)
+{
+    if (rhs == 0.0f)
+    {
+        std::cout << "Error: cannot divide by 0!\n";
+    }
+    return lhs / rhs;
+}
+
+struct DoubleType
+{
+    double add(double lhs, double rhs);
+    double subtract(double lhs, double rhs);
+    double multiply(double lhs, double rhs);
+    double divide(double lhs, double rhs);
+};
+
+double DoubleType::add(double lhs, double rhs)
+{
+    return lhs + rhs;
+}
+
+double DoubleType::subtract(double lhs, double rhs)
+{
+    return lhs - rhs;
+}
+
+double DoubleType::multiply(double lhs, double rhs)
+{
+    return lhs * rhs;
+}
+
+double DoubleType::divide(double lhs, double rhs)
+{
+    if (rhs == 0.0)
+    {
+        std::cout << "Error: cannot divide by 0!\n";
+    }
+    return lhs / rhs;
+}
+
+struct IntType
+{
+    int add(int lhs, int rhs);
+    int subtract(int lhs, int rhs);
+    int multiply(int lhs, int rhs);
+    int divide(int lhs, int rhs);
+};
+
+int IntType::add(int lhs, int rhs)
+{
+    return lhs + rhs;
+}
+
+int IntType::subtract(int lhs, int rhs)
+{
+    return lhs - rhs;
+}
+
+int IntType::multiply(int lhs, int rhs)
+{
+    return lhs * rhs;
+}
+
+int IntType::divide(int lhs, int rhs)
+{
+    if (rhs == 0)
+    {
+        std::cout << "Error: cannot divide by 0! Returning 0 instead\n";
+        return 0;
+    }
+    else
+    {
+        return lhs / rhs;
+    }
+}
+
 int main()
 {
+    FloatType ft;
+    DoubleType dt;
+    IntType it;
+
+    // Addition
+    auto ftAdd = ft.add(3.2f, 23.0f);
+    std::cout << "result of ft.add: " << ftAdd << '\n';
+    auto dtAdd = dt.add(3.2, 23.0);
+    std::cout << "result of dt.add: " << dtAdd << '\n';
+    auto itAdd = it.add(3, 2);
+    std::cout << "result of it.add: " << itAdd << '\n';
+
+    // Subtraction
+    auto ftSub = ft.subtract(3.2f, 23.0f);
+    std::cout << "result of ft.subtract: " << ftSub << '\n';
+    auto dtSub = dt.subtract(3.2, 23.0);
+    std::cout << "result of dt.subtract: " << dtSub << '\n';
+    auto itSub = it.subtract(3, 2);
+    std::cout << "result of it.subtract: " << itSub << '\n';
+
+    // Multiplication
+    auto ftMult = ft.multiply(3.2f, 23.0f);
+    std::cout << "result of ft.multiply: " << ftMult << '\n';
+    auto dtMult = dt.multiply(3.2, 23.0);
+    std::cout << "result of dt.multiply: " << dtMult << '\n';
+    auto itMult = it.multiply(3, 2);
+    std::cout << "result of it.multiply: " << itMult << '\n';
+    
+    // Division
+    auto ftDiv = ft.divide(3.2f, 23.0f);
+    std::cout << "result of ft.divide: " << ftDiv << '\n';
+    auto dtDiv = dt.divide(3.2, 23.0);
+    std::cout << "result of dt.divide: " << dtDiv << '\n';
+    auto itDiv = it.divide(3, 2);
+    std::cout << "result of it.divide: " << itDiv << '\n';
+
+    // Division by zero
+    ftDiv = ft.divide(3.2f, 0.0f);
+    std::cout << "result of ft.divide: " << ftDiv << '\n';
+    dtDiv = dt.divide(3.2, 0.0);
+    std::cout << "result of dt.divide: " << dtDiv << '\n';
+    itDiv = it.divide(3, 0);
+    std::cout << "result of it.divide: " << itDiv << '\n';
+    
     std::cout << "good to go!" << std::endl;
 }

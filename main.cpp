@@ -68,12 +68,7 @@ struct IntType;
 
 struct FloatType
 {
-    FloatType() {}
-    FloatType(float val) 
-    { 
-        value = new float;
-        *value = val;
-    }
+    FloatType(float val) : value(new float(val)) {}
     ~FloatType() { delete value; }
 
     float* value;
@@ -103,11 +98,7 @@ struct FloatType
 struct DoubleType
 {
     DoubleType() {}
-    DoubleType(double val) 
-    { 
-        value = new double;
-        *value = val;
-    }
+    DoubleType(double val) : value(new double(val)) {}
     ~DoubleType() { delete value; }
 
     double* value;
@@ -137,11 +128,7 @@ struct DoubleType
 struct IntType
 {
     IntType() {}
-    IntType(int val) 
-    { 
-        value = new int;
-        *value = val;
-    }
+    IntType(int val) : value(new int(val)) {}
     ~IntType() { delete value; }
 
     int* value;
@@ -196,10 +183,6 @@ FloatType& FloatType::multiply(float v)
 
 FloatType& FloatType::divide(float v)
 {
-    if (v == 0.0f)
-    {
-        std::cout << "Error: cannot divide by 0!\n";
-    }
     std::cout << "(ft) " << *value << " / " << v << " = ";
     *value /= v;
     std::cout << *value << '\n';
@@ -234,10 +217,6 @@ FloatType& FloatType::multiply(const FloatType& ft)
 
 FloatType& FloatType::divide(const FloatType& ft)
 {
-    if (*ft.value == 0)
-    {
-        std::cout << "Error: cannot divide by 0!\n";
-    }
     std::cout << "(ft) " << *value << " / (ft) " << *ft.value << " = ";
     *value = *value / *ft.value;
     std::cout << *value << '\n';
@@ -272,10 +251,6 @@ FloatType& FloatType::multiply(const DoubleType& dt)
 
 FloatType& FloatType::divide(const DoubleType& dt)
 {
-    if (*dt.value == 0)
-    {
-        std::cout << "Error: cannot divide by 0!\n";
-    }
     std::cout << "(ft) " << *value << " / (dt) " << *dt.value << " = ";
     *value = *value / *dt.value;
     std::cout << *value << '\n';
@@ -309,10 +284,6 @@ FloatType& FloatType::multiply(const IntType& it)
 
 FloatType& FloatType::divide(const IntType& it)
 {
-    if (*it.value == 0)
-    {
-        std::cout << "Error: cannot divide by 0!\n";
-    }
     std::cout << "(ft) " << *value << " / (it) " << *it.value << " = ";
     *value = *value / *it.value;
     std::cout << *value << '\n';
@@ -347,10 +318,6 @@ DoubleType& DoubleType::multiply(double v)
 
 DoubleType& DoubleType::divide(double v)
 {
-    if (v == 0.0)
-    {
-        std::cout << "Error: cannot divide by 0!\n";
-    }
     std::cout << "(dt) " << *value << " / " << v << " = ";
     *value /= v;
     std::cout << *value << '\n';
@@ -385,10 +352,6 @@ DoubleType& DoubleType::multiply(const FloatType& ft)
 
 DoubleType& DoubleType::divide(const FloatType& ft)
 {
-    if (*ft.value == 0)
-    {
-        std::cout << "Error: cannot divide by 0!\n";
-    }
     std::cout << "(dt) " << *value << " / (ft) " << *ft.value << " = ";
     *value = *value / *ft.value;
     std::cout << *value << '\n';
@@ -423,10 +386,6 @@ DoubleType& DoubleType::multiply(const DoubleType& dt)
 
 DoubleType& DoubleType::divide(const DoubleType& dt)
 {
-    if (*dt.value == 0)
-    {
-        std::cout << "Error: cannot divide by 0!\n";
-    }
     std::cout << "(dt) " << *value << " / (dt) " << *dt.value << " = ";
     *value = *value / *dt.value;
     std::cout << *value << '\n';
@@ -461,10 +420,6 @@ DoubleType& DoubleType::multiply(const IntType& it)
 
 DoubleType& DoubleType::divide(const IntType& it)
 {
-    if (*it.value == 0)
-    {
-        std::cout << "Error: cannot divide by 0!\n";
-    }
     std::cout << "(dt) " << *value << " / (it) " << *it.value << " = ";
     *value = *value / *it.value;
     std::cout << *value << '\n';
@@ -499,13 +454,17 @@ IntType& IntType::multiply(int v)
 
 IntType& IntType::divide(int v)
 {
-    if (v == 0.0f)
+    if (v == 0)
     {
-        std::cout << "Error: cannot divide by 0!\n";
+        std::cout << "Error: Int division by zero. Calculation skipped. ";
+        std::cout << "(it) " << *value << '\n';
     }
-    std::cout << "(it) " << *value << " / " << v << " = ";
-    *value /= v;
-    std::cout << *value << '\n';
+    else
+    {
+        std::cout << "(it) " << *value << " / " << v << " = ";
+        *value /= v;
+        std::cout << *value << '\n';
+    }
     return *this;
 }
 
@@ -537,13 +496,17 @@ IntType& IntType::multiply(const FloatType& ft)
 
 IntType& IntType::divide(const FloatType& ft)
 {
-    if (*ft.value == 0)
+    if (*ft.value == 0.0f)
     {
-        std::cout << "Error: cannot divide by 0!\n";
+        std::cout << "Error: Int division by zero. Calculation skipped. ";
+        std::cout << "(it) " << *value << '\n';
     }
-    std::cout << "(it) " << *value << " / (ft) " << *ft.value << " = ";
-    *value = *value / *ft.value;
-    std::cout << *value << '\n';
+    else
+    {
+        std::cout << "(it) " << *value << " / (ft) " << *ft.value << " = ";
+        *value = *value / *ft.value;
+        std::cout << *value << '\n';
+    }
     return *this;
 }
 
@@ -575,13 +538,17 @@ IntType& IntType::multiply(const DoubleType& dt)
 
 IntType& IntType::divide(const DoubleType& dt)
 {
-    if (*dt.value == 0)
+    if (*dt.value == 0.0)
     {
-        std::cout << "Error: cannot divide by 0!\n";
+        std::cout << "Error: Int division by zero. Calculation skipped. ";
+        std::cout << "(it) " << *value << '\n';
     }
-    std::cout << "(it) " << *value << " / (dt) " << *dt.value << " = ";
-    *value = *value / *dt.value;
-    std::cout << *value << '\n';
+    else
+    {
+        std::cout << "(it) " << *value << " / (dt) " << *dt.value << " = ";
+        *value = *value / *dt.value;
+        std::cout << *value << '\n';
+    }
     return *this;
 }
 
@@ -615,8 +582,8 @@ IntType& IntType::divide(const IntType& it)
 {
     if (*it.value == 0)
     {
-        std::cout << "Error: cannot divide by 0! Returning zero instead\n";
-        *value = 0;
+        std::cout << "Error: Int division by zero. Calculation skipped. ";
+        std::cout << "(it) " << *value << '\n';
     }
     else
     {
@@ -629,26 +596,52 @@ IntType& IntType::divide(const IntType& it)
 
 int main()
 {
-    FloatType ft(-1.0f);
-    ft.add(4.0f).subtract(2.0f).multiply(2.0f).divide(0.5f);
+    std::cout << "- ";
+    std::cout << "FloatType primitive calculations:\n";
+    FloatType ft(-1.1f);
+    ft.add(8.0f).subtract(7.0f).multiply(6.0f).divide(5.0f);
     std::cout << '\n';
 
-    DoubleType dt(2.0);
-    dt.add(4.0).subtract(2.0).multiply(2.0).divide(0.5);
+    std::cout << "- ";
+    std::cout << "DoubleType primitive calculations:\n";
+    DoubleType dt(2.2);
+    dt.add(8.0).subtract(7.0).multiply(6.0).divide(5.0);
     std::cout << '\n';
 
+    std::cout << "- ";
+    std::cout << "IntType primitive calculations:\n";
     IntType it(3);
-    it.add(4).subtract(2).multiply(2).divide(1);
+    it.add(8).subtract(7).multiply(6).divide(5);
     std::cout << '\n';
 
-    ft.add(it).multiply(ft).subtract(dt).divide(it).divide(it);
+    std::cout << "- ";
+    std::cout << "FloatType UDT calculations:\n";
+    ft.add(it).multiply(ft).subtract(dt).divide(it);
     std::cout << '\n';
 
-    dt.add(it).multiply(ft).subtract(ft).divide(it).divide(it);
+    std::cout << "- ";
+    std::cout << "DoubleType UDT calculations:\n";
+    dt.add(it).multiply(ft).subtract(ft).divide(it);
     std::cout << '\n';
 
-    it.add(it).multiply(ft).subtract(ft).divide(dt).divide(dt);
+    std::cout << "- ";
+    std::cout << "IntType UDT calculations:\n";
+    it.add(it).multiply(ft).subtract(ft).divide(dt);
     std::cout << '\n';
-    
+
+    *ft.value = 1.0f;
+    *dt.value = 1.0;
+    *it.value = 1;
+    std::cout << "- ";
+    std::cout << "Object values set to 1.\n";
+    std::cout << '\n';
+
+    std::cout << "- ";
+    std::cout << "Division by zero (primitive):\n";
+    ft.divide(0.0f);
+    dt.divide(0.0);
+    it.divide(0);
+    std::cout << '\n';
+
     std::cout << "good to go!" << std::endl;
 }

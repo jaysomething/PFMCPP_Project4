@@ -35,140 +35,126 @@ send me a DM to check your pull request
 
 struct FloatType
 {
-    FloatType(float val = 0.0f) : m_value(new float(val)) {}
+    FloatType(float val = 0.0f) : value(new float(val)) {}
     ~FloatType()
-	{
-		delete m_value;
-		m_value = nullptr;
-	}
+    {
+        delete value;
+    }
 
-	operator float() { return *m_value; }
+    operator float() { return *value; }
 
     FloatType& add(float v);
     FloatType& subtract(float v);
     FloatType& multiply(float v);
     FloatType& divide(float v);
-	
+    
 private:
-	float* m_value { nullptr };
+    float* value { nullptr };
 };
 
 struct DoubleType
 {
-    DoubleType(double val = 0.0) : m_value(new double(val)) {}
+    DoubleType(double val = 0.0) : value(new double(val)) {}
     ~DoubleType()
-	{
-		delete m_value;
-		m_value = nullptr;
-	}
+    {
+        delete value;
+    }
 
-	operator double() { return *m_value; }
+    operator double() { return *value; }
 
     DoubleType& add(double v);
     DoubleType& subtract(double v);
     DoubleType& multiply(double v);
     DoubleType& divide(double v);
-	
+    
 private:
-	double* m_value { nullptr };
+    double* value { nullptr };
 };
 
 struct IntType
 {
-    IntType(int val = 0) : m_value(new int(val)) {}
+    IntType(int val = 0) : value(new int(val)) {}
     ~IntType()
-	{
-		delete m_value;
-		m_value = nullptr;
-	}
+    {
+        delete value;
+    }
 
-	operator int() { return *m_value; }
-	
+    operator int() { return *value; }
+    
     IntType& add(int v);
     IntType& subtract(int v);
     IntType& multiply(int v);
     IntType& divide(int v);
 
 private:
-	int* m_value { nullptr };
+    int* value { nullptr };
 };
 
 FloatType& FloatType::add(float v)
 {
-	std::cout << "(ft) " << *m_value << " + " << v << " = " << *m_value + v << '\n';
-	*m_value += v;
+    *value += v;
     return *this;
 }
 
 FloatType& FloatType::subtract(float v)
 {
-	std::cout << "(ft) " << *m_value << " - " << v << " = " << *m_value - v << '\n';
-    *m_value -= v;
+    *value -= v;
     return *this;
 }
 
 FloatType& FloatType::multiply(float v)
 {
-	std::cout << "(ft) " << *m_value << " * " << v << " = " << *m_value * v << '\n';
-    *m_value *= v;
+    *value *= v;
     return *this;
 }
 
 FloatType& FloatType::divide(float v)
 {
-	std::cout << "(ft) " << *m_value << " / " << v << " = " << *m_value / v << '\n';
-	*m_value /= v;
+    *value /= v;
     return *this;
 }
 
 // DoubleType member functions implementation
 DoubleType& DoubleType::add(double v)
 {
-	std::cout << "(dt) " << *m_value << " + " << v << " = " << *m_value + v << '\n';
-	*m_value += v;
+    *value += v;
     return *this;
 }
 
 DoubleType& DoubleType::subtract(double v)
 {
-	std::cout << "(dt) " << *m_value << " - " << v << " = " << *m_value - v << '\n';
-    *m_value -= v;
+    *value -= v;
     return *this;
 }
 
 DoubleType& DoubleType::multiply(double v)
 {
-	std::cout << "(dt) " << *m_value << " * " << v << " = " << *m_value * v << '\n';
-    *m_value *= v;
+    *value *= v;
     return *this;
 }
 
 DoubleType& DoubleType::divide(double v)
 {
-	std::cout << "(dt) " << *m_value << " / " << v << " = " << *m_value / v << '\n';
-	*m_value /= v;
+    *value /= v;
     return *this;
 }
 
 // IntType member functions implementation
 IntType& IntType::add(int v)
 {
-	std::cout << "(it) " << *m_value << " + " << v << " = " << *m_value + v << '\n';
-	*m_value += v;
+    *value += v;
     return *this;
 }
 
 IntType& IntType::subtract(int v)
 {
-	std::cout << "(it) " << *m_value << " - " << v << " = " << *m_value - v << '\n';
-    *m_value -= v;
+    *value -= v;
     return *this;
 }
 
 IntType& IntType::multiply(int v)
 {
-	std::cout << "(it) " << *m_value << " * " << v << " = " << *m_value * v << '\n';
-    *m_value *= v;
+    *value *= v;
     return *this;
 }
 
@@ -176,58 +162,44 @@ IntType& IntType::divide(int v)
 {
     if (v == 0)
     {
-        std::cout << "Error: Int division by zero. Calculation skipped. ";
-        std::cout << "(it) " << *m_value << '\n';
+        std::cout << "Error: Int division by zero. Calculation skipped. Return original value: ";
     }
     else
     {
-        std::cout << "(it) " << *m_value << " / " << v << " = " << *m_value / v << '\n';
-        *m_value /= v;
+        *value /= v;
     }
     return *this;
 }
 
 int main()
 {
-	
-    std::cout << "- ";
-    std::cout << "FloatType primitive calculations:\n";
+    
     FloatType ft(-1.1f);
-    ft.add(8.0f).subtract(7.0f).multiply(6.0f).divide(5.0f);
-    std::cout << '\n';
-
     std::cout << "- ";
-    std::cout << "DoubleType primitive calculations:\n";
+    std::cout << "FloatType primitive calculations: " << ft.add(8.0f).subtract(7.0f).multiply(6.0f).divide(5.0f) << '\n';
+
     DoubleType dt(2.2);
-    dt.add(8.0).subtract(7.0).multiply(6.0).divide(5.0);
-    std::cout << '\n';
-
     std::cout << "- ";
-    std::cout << "IntType primitive calculations:\n";
+    std::cout << "DoubleType primitive calculations: " << dt.add(8.0).subtract(7.0).multiply(6.0).divide(5.0) << '\n';
+
     IntType it(3);
-    it.add(8).subtract(7).multiply(6).divide(5);
-    std::cout << '\n';
+    std::cout << "- ";
+    std::cout << "IntType primitive calculations: " << it.add(8).subtract(7).multiply(6).divide(5) << '\n';
 
     std::cout << "- ";
-    std::cout << "FloatType UDT calculations:\n";
-    ft.add(it).multiply(ft).subtract(static_cast<float>(dt)).divide(it);
-    std::cout << '\n';
+    std::cout << "FloatType UDT calculations: " << ft.add(it).multiply(ft).subtract(static_cast<float>(dt)).divide(it) << '\n';
 
     std::cout << "- ";
-    std::cout << "DoubleType UDT calculations:\n";
-    dt.add(it).multiply(static_cast<double>(ft)).subtract(static_cast<double>(ft)).divide(it);
-    std::cout << '\n';
+    std::cout << "DoubleType UDT calculations: " << dt.add(it).multiply(static_cast<double>(ft)).subtract(static_cast<double>(ft)).divide(it) << '\n';
 
     std::cout << "- ";
-    std::cout << "IntType UDT calculations:\n";
-    it.add(it).multiply(static_cast<int>(ft)).subtract(static_cast<int>(ft)).divide(static_cast<int>(dt));
-    std::cout << '\n';
+    std::cout << "IntType UDT calculations: " << it.add(it).multiply(static_cast<int>(ft)).subtract(static_cast<int>(ft)).divide(static_cast<int>(dt)) << '\n';
 
     std::cout << "- ";
-    std::cout << "Division by zero (primitive):\n";
-    ft.divide(0.0f);
-    dt.divide(0.0);
-    it.divide(0);
+    std::cout << "Division by zero (primitive): " << '\n';
+    std::cout << ft.divide(0.0f) << '\n';
+    std::cout << dt.divide(0.0) << '\n';
+    std::cout << it.divide(0) << '\n';
     std::cout << '\n';
 
     std::cout << "good to go!" << std::endl;

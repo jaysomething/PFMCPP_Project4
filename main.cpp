@@ -66,7 +66,12 @@ struct IntType;
 struct Point
 {
     Point(float val_x, float val_y);
+    Point(const FloatType& val_x, const FloatType& val_y);
     Point(const DoubleType& val_x, const DoubleType& val_y);
+    Point(const IntType& val_x, const IntType& val_y);
+	Point(const FloatType& ft);
+	Point(const DoubleType& dt);
+	Point(const IntType& it);
     
     Point& multiply(float m);
     Point& multiply(const FloatType& m);
@@ -163,7 +168,12 @@ private:
 
 // Point class
 Point::Point(float val_x, float val_y) : x(val_x), y(val_y) {}
+Point::Point(const FloatType& val_x, const FloatType& val_y) : x(val_x), y(val_y) {}
 Point::Point(const DoubleType& val_x, const DoubleType& val_y) : x(static_cast<float>(val_x)), y(static_cast<float>(val_y)) {}
+Point::Point(const IntType& val_x, const IntType& val_y) : x(static_cast<float>(val_x)), y(static_cast<float>(val_y)) {}
+Point::Point(const FloatType& ft) : x(ft), y(ft) {}
+Point::Point(const DoubleType& dt) : x(static_cast<float>(dt)), y(static_cast<float>(dt)) {}
+Point::Point(const IntType& it) : x(static_cast<float>(it)), y(static_cast<float>(it)) {}
 
 Point& Point::multiply(float m)
 {
@@ -174,27 +184,20 @@ Point& Point::multiply(float m)
 
 Point& Point::multiply(const FloatType& m)
 {
-    x *= m;
-    y *= m;
-    return *this;
+    return multiply(static_cast<float>(m));
 }
 
 Point& Point::multiply(const DoubleType& m)
 {
-    x *= static_cast<float>(m);
-    y *= static_cast<float>(m);
-    return *this;
+    return multiply(static_cast<float>(m));
 }
 
 Point& Point::multiply(const IntType& m)
 {
-    x *= m;
-    y *= m;
-    return *this;
+    return multiply(static_cast<float>(m));
 }
 
 // FloatType member functions implementation
-
 FloatType& FloatType::add(float v)
 {
     *value += v;
@@ -376,6 +379,9 @@ int main()
     Point p2(ft, it);
     p2.toString();
     p2.multiply(ft).toString().multiply(dt).toString().multiply(it).toString();
+	
+	Point p3(it);
+    p3.toString();
     
     std::cout << "good to go!" << std::endl;
 }

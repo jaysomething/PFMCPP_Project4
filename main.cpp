@@ -224,22 +224,22 @@ FloatType& FloatType::divide(float v)
 
 FloatType& FloatType::pow(const IntType& v)
 {
-    return FloatType::powInternal(v);
+    return FloatType::powInternal(v); FIXME this doesn't need full qualification to be called
 }
 
 FloatType& FloatType::pow(const FloatType& v)
 {
-    return FloatType::powInternal(v);
+    return FloatType::powInternal(v); FIXME this doesn't need full qualification to be called
 }
 
 FloatType& FloatType::pow(const DoubleType& v)
 {
-    return FloatType::powInternal(static_cast<float>(v));
+    return FloatType::powInternal(static_cast<float>(v)); FIXME this doesn't need full qualification to be called
 }
 
 FloatType& FloatType::pow(float v)
 {
-    return FloatType::powInternal(v);
+    return FloatType::powInternal(v); FIXME this doesn't need full qualification to be called
 }
 
 FloatType& FloatType::powInternal(float v)
@@ -275,22 +275,22 @@ DoubleType& DoubleType::divide(double v)
 
 DoubleType& DoubleType::pow(const IntType& v)
 {
-    return DoubleType::powInternal(v); 
+    return DoubleType::powInternal(v);  FIXME this doesn't need full qualification to be called
 }
 
 DoubleType& DoubleType::pow(const FloatType& v)
 {
-    return DoubleType::powInternal(static_cast<double>(v)); 
+    return DoubleType::powInternal(static_cast<double>(v));  FIXME this doesn't need full qualification to be called
 }
 
 DoubleType& DoubleType::pow(const DoubleType& v)
 {
-    return DoubleType::powInternal(v); 
+    return DoubleType::powInternal(v);  FIXME this doesn't need full qualification to be called
 } 
 
 DoubleType& DoubleType::pow(double v)
 {
-    return DoubleType::powInternal(v); 
+    return DoubleType::powInternal(v); FIXME this doesn't need full qualification to be called
 }
 
 DoubleType& DoubleType::powInternal(double v)
@@ -333,22 +333,22 @@ IntType& IntType::divide(int v)
 
 IntType& IntType::pow(const IntType& v)
 {
-    return IntType::powInternal(v); 
+    return IntType::powInternal(v); FIXME this doesn't need full qualification to be called
 }
 
 IntType& IntType::pow(const FloatType& v)
 {
-    return IntType::powInternal(static_cast<int>(v)); 
+    return IntType::powInternal(static_cast<int>(v)); FIXME this doesn't need full qualification to be called
 }
 
 IntType& IntType::pow(const DoubleType& v)
 {
-    return IntType::powInternal(static_cast<int>(v)); 
+    return IntType::powInternal(static_cast<int>(v)); FIXME this doesn't need full qualification to be called
 }
 
 IntType& IntType::pow(int v)
 {
-    return IntType::powInternal(v); 
+    return IntType::powInternal(v); FIXME this doesn't need full qualification to be called
 }
 
 IntType& IntType::powInternal(int v)

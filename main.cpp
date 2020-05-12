@@ -55,21 +55,38 @@ send me a DM to check your pull request
  Wait for my code review.
  */
 
+#include <iostream>
+#include <cmath>
+
+// Forward declaration
+struct FloatType;
+struct DoubleType;
+struct IntType;
+
 struct Point
 {
-    Point& multiply(float m)
+    Point(float val_x, float val_y);
+    Point(const FloatType& val_x, const FloatType& val_y);
+    Point(const DoubleType& val_x, const DoubleType& val_y);
+    Point(const IntType& val_x, const IntType& val_y);
+    Point(const FloatType& ft);
+    Point(const DoubleType& dt);
+    Point(const IntType& it);
+    
+    Point& multiply(float m);
+    Point& multiply(const FloatType& m);
+    Point& multiply(const DoubleType& m);
+    Point& multiply(const IntType& m);
+    
+    Point& toString()
     {
-        x *= m;
-        y *= m;
+        std::cout << "x = " << x << ", y = " << y << '\n';
         return *this;
     }
+    
 private:
     float x{0}, y{0};
 };
-
-
-
-#include <iostream>
 
 struct FloatType
 {
@@ -79,12 +96,19 @@ struct FloatType
         delete value;
     }
 
-    operator float() { return *value; }
+    operator float() const { return *value; }
 
     FloatType& add(float v);
     FloatType& subtract(float v);
     FloatType& multiply(float v);
     FloatType& divide(float v);
+
+    FloatType& pow(const IntType& v);
+    FloatType& pow(const FloatType& v);
+    FloatType& pow(const DoubleType& v);
+    FloatType& pow(float);
+
+    FloatType& powInternal(float v);
     
 private:
     float* value { nullptr };
@@ -98,12 +122,19 @@ struct DoubleType
         delete value;
     }
 
-    operator double() { return *value; }
+    operator double() const { return *value; }
 
     DoubleType& add(double v);
     DoubleType& subtract(double v);
     DoubleType& multiply(double v);
     DoubleType& divide(double v);
+
+    DoubleType& pow(const IntType& v);
+    DoubleType& pow(const FloatType& v);
+    DoubleType& pow(const DoubleType& v);
+    DoubleType& pow(double);
+
+    DoubleType& powInternal(double v);
     
 private:
     double* value { nullptr };
@@ -117,17 +148,56 @@ struct IntType
         delete value;
     }
 
-    operator int() { return *value; }
-    
+    operator int() const { return *value; }
+
     IntType& add(int v);
     IntType& subtract(int v);
     IntType& multiply(int v);
     IntType& divide(int v);
 
+    IntType& pow(const IntType& v);
+    IntType& pow(const FloatType& v);
+    IntType& pow(const DoubleType& v);
+    IntType& pow(int);
+
+    IntType& powInternal(int v);
+
 private:
     int* value { nullptr };
 };
 
+// Point class
+Point::Point(float val_x, float val_y) : x(val_x), y(val_y) {}
+Point::Point(const FloatType& val_x, const FloatType& val_y) : x(val_x), y(val_y) {}
+Point::Point(const DoubleType& val_x, const DoubleType& val_y) : x(static_cast<float>(val_x)), y(static_cast<float>(val_y)) {}
+Point::Point(const IntType& val_x, const IntType& val_y) : x(static_cast<float>(val_x)), y(static_cast<float>(val_y)) {}
+Point::Point(const FloatType& ft) : x(ft), y(ft) {}
+Point::Point(const DoubleType& dt) : x(static_cast<float>(dt)), y(static_cast<float>(dt)) {}
+Point::Point(const IntType& it) : x(static_cast<float>(it)), y(static_cast<float>(it)) {}
+
+Point& Point::multiply(float m)
+{
+    x *= m;
+    y *= m;
+    return *this;
+}
+
+Point& Point::multiply(const FloatType& m)
+{
+    return multiply(static_cast<float>(m));
+}
+
+Point& Point::multiply(const DoubleType& m)
+{
+    return multiply(static_cast<float>(m));
+}
+
+Point& Point::multiply(const IntType& m)
+{
+    return multiply(static_cast<float>(m));
+}
+
+// FloatType member functions implementation
 FloatType& FloatType::add(float v)
 {
     *value += v;
@@ -149,6 +219,32 @@ FloatType& FloatType::multiply(float v)
 FloatType& FloatType::divide(float v)
 {
     *value /= v;
+    return *this;
+}
+
+FloatType& FloatType::pow(const IntType& v)
+{
+    return powInternal(v);
+}
+
+FloatType& FloatType::pow(const FloatType& v)
+{
+    return powInternal(v);
+}
+
+FloatType& FloatType::pow(const DoubleType& v)
+{
+    return powInternal(static_cast<float>(v));
+}
+
+FloatType& FloatType::pow(float v)
+{
+    return powInternal(v);
+}
+
+FloatType& FloatType::powInternal(float v)
+{
+    *value = std::pow( *value, v);
     return *this;
 }
 
@@ -174,6 +270,32 @@ DoubleType& DoubleType::multiply(double v)
 DoubleType& DoubleType::divide(double v)
 {
     *value /= v;
+    return *this;
+}
+
+DoubleType& DoubleType::pow(const IntType& v)
+{
+    return powInternal(v);
+}
+
+DoubleType& DoubleType::pow(const FloatType& v)
+{
+    return powInternal(static_cast<double>(v));
+}
+
+DoubleType& DoubleType::pow(const DoubleType& v)
+{
+    return powInternal(v);
+} 
+
+DoubleType& DoubleType::pow(double v)
+{
+    return powInternal(v);
+}
+
+DoubleType& DoubleType::powInternal(double v)
+{
+    *value = std::pow(*value, v);
     return *this;
 }
 
@@ -209,36 +331,57 @@ IntType& IntType::divide(int v)
     return *this;
 }
 
+IntType& IntType::pow(const IntType& v)
+{
+    return powInternal(v);
+}
+
+IntType& IntType::pow(const FloatType& v)
+{
+    return powInternal(static_cast<int>(v));
+}
+
+IntType& IntType::pow(const DoubleType& v)
+{
+    return powInternal(static_cast<int>(v));
+}
+
+IntType& IntType::pow(int v)
+{
+    return powInternal(v);
+}
+
+IntType& IntType::powInternal(int v)
+{
+    *value = static_cast<int>(std::pow(*value, v));
+    return *this;
+}
+
 int main()
 {
-    
-    FloatType ft(-1.1f);
-    std::cout << "- ";
-    std::cout << "FloatType primitive calculations: " << ft.add(8.0f).subtract(7.0f).multiply(6.0f).divide(5.0f) << '\n';
+    FloatType ft(2.0f);
+    DoubleType dt(3.0);
+    IntType it(4);
 
-    DoubleType dt(2.2);
-    std::cout << "- ";
-    std::cout << "DoubleType primitive calculations: " << dt.add(8.0).subtract(7.0).multiply(6.0).divide(5.0) << '\n';
+    ft.pow(dt);
+    std::cout << ft << '\n';
 
-    IntType it(3);
-    std::cout << "- ";
-    std::cout << "IntType primitive calculations: " << it.add(8).subtract(7).multiply(6).divide(5) << '\n';
+    dt.pow(it);
+    std::cout << dt << '\n';
 
-    std::cout << "- ";
-    std::cout << "FloatType UDT calculations: " << ft.add(it).multiply(ft).subtract(static_cast<float>(dt)).divide(it) << '\n';
+    it.pow(ft);
+    std::cout << it << '\n';
 
-    std::cout << "- ";
-    std::cout << "DoubleType UDT calculations: " << dt.add(it).multiply(static_cast<double>(ft)).subtract(static_cast<double>(ft)).divide(it) << '\n';
+    Point p1(dt, dt);
+    p1.toString();
+    p1.multiply(ft).toString().multiply(dt).toString().multiply(it).toString();
 
-    std::cout << "- ";
-    std::cout << "IntType UDT calculations: " << it.add(it).multiply(static_cast<int>(ft)).subtract(static_cast<int>(ft)).divide(static_cast<int>(dt)) << '\n';
+    Point p2(ft, it);
+    p2.toString();
+    p2.multiply(ft).toString().multiply(dt).toString().multiply(it).toString();
 
-    std::cout << "- ";
-    std::cout << "Division by zero (primitive): " << '\n';
-    std::cout << ft.divide(0.0f) << '\n';
-    std::cout << dt.divide(0.0) << '\n';
-    std::cout << it.divide(0) << '\n';
-    std::cout << '\n';
+    Point p3(it);
+    p3.toString();
 
     std::cout << "good to go!" << std::endl;
 }

@@ -69,9 +69,9 @@ struct Point
     Point(const FloatType& val_x, const FloatType& val_y);
     Point(const DoubleType& val_x, const DoubleType& val_y);
     Point(const IntType& val_x, const IntType& val_y);
-	Point(const FloatType& ft);
-	Point(const DoubleType& dt);
-	Point(const IntType& it);
+    Point(const FloatType& ft);
+    Point(const DoubleType& dt);
+    Point(const IntType& it);
     
     Point& multiply(float m);
     Point& multiply(const FloatType& m);
@@ -102,12 +102,12 @@ struct FloatType
     FloatType& subtract(float v);
     FloatType& multiply(float v);
     FloatType& divide(float v);
-    
+
     FloatType& pow(const IntType& v);
     FloatType& pow(const FloatType& v);
     FloatType& pow(const DoubleType& v);
     FloatType& pow(float);
-    
+
     FloatType& powInternal(float v);
     
 private:
@@ -128,12 +128,12 @@ struct DoubleType
     DoubleType& subtract(double v);
     DoubleType& multiply(double v);
     DoubleType& divide(double v);
-    
+
     DoubleType& pow(const IntType& v);
     DoubleType& pow(const FloatType& v);
     DoubleType& pow(const DoubleType& v);
     DoubleType& pow(double);
-    
+
     DoubleType& powInternal(double v);
     
 private:
@@ -149,17 +149,17 @@ struct IntType
     }
 
     operator int() const { return *value; }
-    
+
     IntType& add(int v);
     IntType& subtract(int v);
     IntType& multiply(int v);
     IntType& divide(int v);
-    
+
     IntType& pow(const IntType& v);
     IntType& pow(const FloatType& v);
     IntType& pow(const DoubleType& v);
     IntType& pow(int);
-    
+
     IntType& powInternal(int v);
 
 private:
@@ -275,22 +275,22 @@ DoubleType& DoubleType::divide(double v)
 
 DoubleType& DoubleType::pow(const IntType& v)
 {
-    return DoubleType::powInternal(v);
+    return DoubleType::powInternal(v); 
 }
 
 DoubleType& DoubleType::pow(const FloatType& v)
 {
-    return DoubleType::powInternal(static_cast<double>(v));
+    return DoubleType::powInternal(static_cast<double>(v)); 
 }
 
 DoubleType& DoubleType::pow(const DoubleType& v)
 {
-    return DoubleType::powInternal(v);
-}
+    return DoubleType::powInternal(v); 
+} 
 
 DoubleType& DoubleType::pow(double v)
 {
-    return DoubleType::powInternal(v);
+    return DoubleType::powInternal(v); 
 }
 
 DoubleType& DoubleType::powInternal(double v)
@@ -333,22 +333,22 @@ IntType& IntType::divide(int v)
 
 IntType& IntType::pow(const IntType& v)
 {
-    return IntType::powInternal(v);
+    return IntType::powInternal(v); 
 }
 
 IntType& IntType::pow(const FloatType& v)
 {
-    return IntType::powInternal(static_cast<int>(v));
+    return IntType::powInternal(static_cast<int>(v)); 
 }
 
 IntType& IntType::pow(const DoubleType& v)
 {
-    return IntType::powInternal(static_cast<int>(v));
+    return IntType::powInternal(static_cast<int>(v)); 
 }
 
 IntType& IntType::pow(int v)
 {
-    return IntType::powInternal(v);
+    return IntType::powInternal(v); 
 }
 
 IntType& IntType::powInternal(int v)
@@ -362,16 +362,16 @@ int main()
     FloatType ft(2.0f);
     DoubleType dt(3.0);
     IntType it(4);
-    
+
     ft.pow(dt);
     std::cout << ft << '\n';
-    
+
     dt.pow(it);
     std::cout << dt << '\n';
-    
+
     it.pow(ft);
     std::cout << it << '\n';
-    
+
     Point p1(dt, dt);
     p1.toString();
     p1.multiply(ft).toString().multiply(dt).toString().multiply(it).toString();
@@ -379,9 +379,9 @@ int main()
     Point p2(ft, it);
     p2.toString();
     p2.multiply(ft).toString().multiply(dt).toString().multiply(it).toString();
-	
-	Point p3(it);
+
+    Point p3(it);
     p3.toString();
-    
+
     std::cout << "good to go!" << std::endl;
 }
